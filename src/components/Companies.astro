@@ -1,0 +1,136 @@
+---
+import companiesData from '../data/companies.json';
+---
+
+<section id="companies">
+  <div class="container">
+    <h2>協力企業</h2>
+    <p class="section-subtitle">PARTNER COMPANIES</p>
+    
+    <div class="table-wrapper">
+      <table class="companies-table">
+        <thead>
+          <tr>
+            <th>企業名</th>
+            <th>業種</th>
+            <th>リンク</th>
+          </tr>
+        </thead>
+        <tbody>
+          {companiesData.map((company) => (
+            <tr>
+              <td class="company-name">{company.name}</td>
+              <td>{company.category}</td>
+              <td>
+                {company.url ? (
+                  <a href={company.url} target="_blank" rel="noopener noreferrer" class="company-link">
+                    🔗 ウェブサイト
+                  </a>
+                ) : (
+                  <span class="no-link">-</span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<style>
+  h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #e63946;
+  }
+  
+  .section-subtitle {
+    text-align: center;
+    color: #999;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-bottom: 3rem;
+  }
+  
+  .table-wrapper {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .companies-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .companies-table thead {
+    background: #f5f5f5;
+    border-bottom: 2px solid #e63946;
+  }
+  
+  .companies-table th {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  .companies-table tbody tr {
+    border-bottom: 1px solid #efefef;
+    transition: background-color 0.2s ease;
+  }
+  
+  .companies-table tbody tr:hover {
+    background: #fafafa;
+  }
+  
+  .companies-table tbody tr:last-child {
+    border-bottom: none;
+  }
+  
+  .companies-table td {
+    padding: 1rem 1.5rem;
+    color: #333;
+  }
+  
+  .company-name {
+    font-weight: 500;
+    color: #222;
+  }
+  
+  .company-link {
+    color: #e63946;
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s ease;
+  }
+  
+  .company-link:hover {
+    color: #c82333;
+    text-decoration: underline;
+  }
+  
+  .no-link {
+    color: #999;
+  }
+  
+  @media (max-width: 768px) {
+    .table-wrapper {
+      overflow-x: auto;
+    }
+    
+    .companies-table {
+      min-width: 600px;
+    }
+    
+    .companies-table th,
+    .companies-table td {
+      padding: 0.875rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>

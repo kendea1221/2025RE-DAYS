@@ -1,0 +1,173 @@
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1 class="hero-title">RE:DAYS</h1>
+      <p class="hero-subtitle">被爆後の広島からの復興を2025年の今、学ぶ。</p>
+      <p class="hero-description">
+        被爆から80年という節目に、修道高等学校の生徒が地元企業の戦後復興ストーリーを取材。<br />
+      </p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number">286</div>
+          <div class="stat-label">参加生徒数</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">33</div>
+          <div class="stat-label">協力企業</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">80</div>
+          <div class="stat-label">被爆からの年月</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background-image: url('/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  
+  .hero-title {
+    font-size: 5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 8px;
+    text-shadow: 
+      0 2px 4px rgba(0,0,0,0.8),
+      0 4px 8px rgba(0,0,0,0.6);
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    text-shadow: 
+      0 2px 4px rgba(0,0,0,0.8),
+      0 4px 8px rgba(0,0,0,0.6);
+  }
+  
+  .hero-description {
+    font-size: 1.1rem;
+    margin-bottom: 4rem;
+    line-height: 2;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 
+      0 2px 4px rgba(0,0,0,0.8),
+      0 4px 8px rgba(0,0,0,0.6);
+  }
+  
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+  
+  .stat {
+    text-align: center;
+  }
+  
+  .stat-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  }
+  
+  .stat-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  }
+  
+  /* レスポンシブデザイン */
+  @media (max-width: 768px) {
+    .hero {
+      background-attachment: scroll;
+      min-height: 100svh;
+      padding: 100px 0 60px;
+    }
+    
+    .hero-title {
+      font-size: 3rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+    
+    .hero-description {
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+    
+    .hero-description br {
+      display: none;
+    }
+    
+    .hero-stats {
+      gap: 2rem;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+    
+    .stat-number {
+      font-size: 2rem;
+    }
+  }
+</style>

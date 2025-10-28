@@ -1,0 +1,131 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const reports = await getCollection('reports');
+console.log('Reports found:', reports.length);
+const sortedReports = reports.sort((a, b) => {
+  if (a.data.kumi !== b.data.kumi) {
+    return a.data.kumi - b.data.kumi;
+  }
+  return a.data.han - b.data.han;
+});
+---
+
+<Layout title="成果物 - RE:DAYS">
+  <section class="reports">
+    <div class="container">
+      <h1 class="page-title">レポートまとめ</h1>
+      <p class="page-subtitle">各班が企業へ伺いインタビューをしたレポートが掲載されています（全{sortedReports.length}件）</p>
+      
+      {sortedReports.length === 0 ? (
+        <p style="text-align: center; padding: 3rem; color: #999;">
+          成果物がまだ登録されていません。
+        </p>
+      ) : (
+        <div class="reports-grid">
+          {sortedReports.map((report) => (
+            <a href={`/report/${report.slug}`} class="report-card">
+              <div class="report-card-badge">{report.data.kumi}組{report.data.han}班</div>
+              <h3 class="report-card-company">{report.data.company}</h3>
+              <p class="report-card-description">{report.data.description}</p>
+              <div class="report-card-links">
+                {report.data.videoUrl && <span class="link-icon">🎥 動画</span>}
+                <span class="link-icon">📝 記事</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .reports {
+    background: #ffffff;
+    padding: 120px 0 80px;
+    min-height: calc(100vh - 80px);
+  }
+  
+  .page-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #e63946;
+    margin-bottom: 0.5rem;
+  }
+  
+  .page-subtitle {
+    text-align: center;
+    color: #999;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-bottom: 4rem;
+  }
+  
+  .reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+  
+  .report-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: block;
+  }
+  
+  .report-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(230, 57, 70, 0.15);
+    border-color: rgba(230, 57, 70, 0.2);
+  }
+  
+  .report-card-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background: #e63946;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  
+  .report-card-company {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+  }
+  
+  .report-card-description {
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .report-card-links {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+  }
+  
+  .link-icon {
+    color: #999;
+  }
+  
+  @media (max-width: 768px) {
+    .reports-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
