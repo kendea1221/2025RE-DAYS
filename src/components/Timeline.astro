@@ -1,0 +1,206 @@
+---
+const timelineEvents = [
+  {
+    date: '2025年4月初旬',
+    title: '事前研修',
+    description: '中国新聞社の記者を招き、取材方法のレクチャーを実施。',
+    icon: '📚'
+  },
+  {
+    date: '2025年6月',
+    title: '「マイパレ」の活用',
+    description: '探究学習に特化した生成AI「マイパレ」の講座を実施。\n インタビュー内容の整理や資料作成に活用。',
+    icon: '🤖'
+  },
+  {
+    date: '2025年6月中旬〜7月初旬',
+    title: 'インタビュー',
+    description: '5~6人のグループを36グループ作り、広島市内の企業33社を訪問。\n 被爆後からの復興の道のりをインタビュー。',
+    icon: '🎤'
+  },
+  {
+    date: '2025年7月',
+    title: '内容整理・資料作成',
+    description: '「マイパレ」を活用し、8/6の発表会に向けてインタビュー内容の整理・スライド作成。',
+    icon: '✍️'
+  },
+  {
+    date: '2025年8月6日',
+    title: '発表・共有',
+    description: '8/6の登校日にて、全クラスで各班が発表。',
+    icon: '📢'
+  }
+];
+---
+
+<section id="timeline" class="timeline-section">
+  <div class="container">
+    <h2>活動の流れ</h2>
+    <p class="section-subtitle">THE PROCESS OF RE:DAYS</p>
+    
+    <div class="timeline">
+      {timelineEvents.map((event, index) => (
+        <div class="timeline-item">
+          <div class="timeline-icon">{event.icon}</div>
+          <div class="timeline-content">
+            <div class="timeline-date">{event.date}</div>
+            <h3 class="timeline-title">{event.title}</h3>
+            <p class="timeline-description" set:html={event.description.replace(/\n/g, '<br />')} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline-section {
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fc 100%);
+    position: relative;
+    padding: 80px 0;
+  }
+  
+  .timeline-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #e63946;
+  }
+  
+  .section-subtitle {
+    text-align: center;
+    color: #999;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4rem;
+  }
+  
+  .timeline {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 0;
+  }
+  
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #e63946, rgba(230, 57, 70, 0.3));
+  }
+  
+  .timeline-item {
+    position: relative;
+    padding-left: 130px;
+    margin-bottom: 3rem;
+  }
+  
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .timeline-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100px;
+    height: 100px;
+    background: white;
+    border: 4px solid #e63946;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    z-index: 1;
+    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-item:hover .timeline-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.3);
+  }
+  
+  .timeline-content {
+    background: white;
+    padding: 2rem 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border: 1px solid rgba(230, 57, 70, 0.1);
+    transition: all 0.3s ease;
+    min-height: 100px;
+  }
+  
+  .timeline-content:hover {
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.15);
+    transform: translateY(-3px);
+    border-color: rgba(230, 57, 70, 0.3);
+  }
+  
+  .timeline-date {
+    color: #e63946;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .timeline-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #222;
+  }
+  
+  .timeline-description {
+    color: #555;
+    line-height: 1.9;
+    font-size: 1rem;
+  }
+  
+  /* レスポンシブデザイン */
+  @media (max-width: 768px) {
+    .timeline {
+      padding-left: 0;
+    }
+    
+    .timeline::before {
+      left: 22px;
+    }
+    
+    .timeline-item {
+      padding-left: 70px;
+    }
+    
+    .timeline-icon {
+      left: 0;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      border-width: 3px;
+    }
+    
+    .timeline-content {
+      padding: 1.5rem;
+    }
+    
+    .timeline-date {
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .timeline-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .timeline-description {
+      font-size: 0.95rem;
+    }
+  }
+</style>

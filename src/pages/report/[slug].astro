@@ -1,0 +1,387 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const reports = await getCollection('reports');
+  return reports.map((report) => ({
+    params: { slug: report.slug },
+    props: { report },
+  }));
+}
+
+const { report } = Astro.props;
+const { Content } = await report.render();
+---
+
+<Layout title={`${report.data.kumi}組${report.data.han}班 - ${report.data.company} - RE:DAYS`}>
+  <section class="report-detail">
+    <div class="container">
+      <div class="report-header">
+        <div class="report-badge">{report.data.kumi}組{report.data.han}班</div>
+        <h1 class="report-title">{report.data.company}</h1>
+        <p class="report-description">{report.data.description}</p>
+        
+        {report.data.videoUrl && (
+          <div class="report-links">
+            <a href={report.data.videoUrl} class="resource-link video-link">
+              🎥 動画を視聴する
+            </a>
+          </div>
+        )}
+      </div>
+      
+      <div class="report-content">
+        <Content />
+      </div>
+      
+      <div class="report-back">
+        <a href="/report" class="back-link">← まとめレポート一覧に戻る</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 動画モーダル -->
+  <div id="video-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <div class="modal-body">
+        <video id="modal-video" controls controlsList="nodownload">
+          <source src="" type="video/mp4">
+          お使いのブラウザは動画タグをサポートしていません。
+        </video>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const modal = document.getElementById('video-modal');
+    const modalVideo = document.getElementById('modal-video') as HTMLVideoElement;
+    const closeBtn = document.querySelector('.modal-close');
+    const videoLink = document.querySelector('.video-link');
+    
+    if (videoLink && modal && modalVideo) {
+      videoLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const videoUrl = videoLink.getAttribute('href');
+        if (videoUrl) {
+          const source = modalVideo.querySelector('source');
+          if (source) {
+            source.src = videoUrl;
+            modalVideo.load();
+            modal.style.display = 'flex';
+            modalVideo.play();
+          }
+        }
+      });
+    }
+    
+    if (closeBtn && modal && modalVideo) {
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        modalVideo.pause();
+        modalVideo.currentTime = 0;
+      });
+    }
+    
+    if (modal && modalVideo) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          modalVideo.pause();
+          modalVideo.currentTime = 0;
+        }
+      });
+    }
+    
+    // ESCキーでモーダルを閉じる
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && modal.style.display === 'flex' && modalVideo) {
+        modal.style.display = 'none';
+        modalVideo.pause();
+        modalVideo.currentTime = 0;
+      }
+    });
+  </script>
+</Layout>
+
+<style>
+  .report-detail {
+    background: #ffffff;
+    padding: 120px 0 80px;
+    min-height: calc(100vh - 80px);
+  }
+  
+  .report-header {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  
+  .report-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: #e63946;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+  
+  .report-title {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 1rem;
+  }
+  
+  .report-description {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  
+  .report-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    justify-content: center;
+  }
+  
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: #e63946;
+    color: white;
+    font-weight: 400;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .resource-link:hover {
+    background: #c92a35;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(230, 57, 70, 0.3);
+  }
+  
+  .report-content {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    background: white;
+    padding: 3rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .report-content :global(h2) {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #222;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e63946;
+  }
+  
+  .report-content :global(h3) {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin: 2rem 0 1rem;
+  }
+  
+  .report-content :global(p) {
+    line-height: 1.9;
+    color: #555;
+    margin-bottom: 1.5rem;
+  }
+  
+  .report-content :global(ul), .report-content :global(ol) {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .report-content :global(li) {
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 0.5rem;
+  }
+  
+  .report-content :global(a) {
+    color: #e63946;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .report-content :global(a:hover) {
+    color: #c82333;
+    text-decoration: underline;
+  }
+  
+  .report-back {
+    text-align: center;
+  }
+  
+  .back-link {
+    display: inline-block;
+    color: #e63946;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  
+  .back-link:hover {
+    color: #c82333;
+  }
+  
+  /* モーダルスタイル */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 90vh;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-close:hover {
+    background: #e63946;
+    color: white;
+    transform: rotate(90deg);
+  }
+  
+  .modal-body {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* 動画プレーヤー用のスタイル */
+  #modal-video {
+    width: 100%;
+    height: 100%;
+    background: #000;
+  }
+  
+  @media (max-width: 768px) {
+    .report-detail {
+      padding: 100px 0 60px;
+    }
+    
+    .report-header {
+      margin-bottom: 2rem;
+    }
+    
+    .report-badge {
+      font-size: 0.8rem;
+      padding: 0.3rem 0.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    .report-title {
+      font-size: 1.8rem;
+    }
+    
+    .report-description {
+      font-size: 1rem;
+    }
+    
+    .report-links {
+      justify-content: center;
+    }
+    
+    .resource-link {
+      padding: 0.7rem 1.2rem;
+      font-size: 0.95rem;
+    }
+    
+    .report-content {
+      padding: 2rem 1.5rem;
+    }
+    
+    .report-content :global(h2) {
+      font-size: 1.5rem;
+    }
+    
+    .report-content :global(h3) {
+      font-size: 1.2rem;
+    }
+    
+    .report-content :global(p) {
+      font-size: 0.95rem;
+    }
+    
+    .modal-content {
+      max-width: 100%;
+      height: 80vh;
+      margin: 1rem;
+    }
+    
+    .modal-close {
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 35px;
+      height: 35px;
+      font-size: 1.3rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .report-title {
+      font-size: 1.5rem;
+    }
+    
+    .report-description {
+      font-size: 0.95rem;
+    }
+    
+    .report-content {
+      padding: 1.5rem 1rem;
+    }
+    
+    .report-content :global(h2) {
+      font-size: 1.3rem;
+    }
+  }
+</style>

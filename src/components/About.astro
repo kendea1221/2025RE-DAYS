@@ -1,0 +1,137 @@
+---
+---
+
+<section id="about" class="about">
+  <div class="container">
+    <h2>RE:DAYSとは</h2>
+    <p class="section-subtitle">What is "RE:DAYS"</p>
+    
+    <div class="about-content">
+      <div class="about-card">
+        <div class="icon">🎯</div>
+        <h3>プロジェクトの目的</h3>
+        <p>
+          被爆80年という節目に、若者が地元企業の戦後復興ストーリーを取材して学び、
+          過去から学んだ教訓を未来へ繋げる新しい平和学習の機会を創出します。
+        </p>
+      </div>
+      
+      <div class="about-card">
+        <div class="icon">🤝</div>
+        <h3>地域との繋がり</h3>
+        <p>
+          地域の支えとなった企業人の想いに触れることで、広島の歴史と向き合い、
+          地域への理解と愛着を深めます。
+        </p>
+      </div>
+      
+      <div class="about-card">
+        <div class="icon">🌱</div>
+        <h3>未来への期待</h3>
+        <p>
+          若者が地元企業に関心を持ち、広島で暮らし働く意欲につながることを期待。
+          地元定着やUターンの促進を目指します。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fc 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .about::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e63946, transparent);
+  }
+  
+  .about h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #e63946;
+  }
+  
+  .section-subtitle {
+    text-align: center;
+    color: #999;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+  
+  .about-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+  
+  .about-card {
+    background: white;
+    padding: 3rem 2.5rem;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(230, 57, 70, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #e63946;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .about-card:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .about-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(230, 57, 70, 0.15);
+    border-color: rgba(230, 57, 70, 0.2);
+  }
+  
+  .icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+  
+  .about-card:hover .icon {
+    transform: scale(1.05);
+  }
+  
+  .about-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    color: #e63946;
+    font-weight: 700;
+  }
+  
+  .about-card p {
+    color: #555;
+    line-height: 1.9;
+    font-size: 1rem;
+  }
+</style>
